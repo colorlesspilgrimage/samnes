@@ -1,6 +1,6 @@
 use std::env;
-use std::fs;
 use std::fmt;
+use std::fs;
 
 struct CPU {
     pc: u16,
@@ -56,7 +56,22 @@ impl CPU {
 
 impl fmt::Display for CPU {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "whee")
+        write!(
+            f,
+            "pc: {}\nsp: {}\nac: {}\nidx: {}\nidy: {}\ncf: {}\nzf: {}\nid: {}\ndm: {}\nbc: {}\nof: {}\nnf: {}\n",
+            self.pc,
+            self.sp,
+            self.ac,
+            self.idx,
+            self.idy,
+            self.cf,
+            self.zf,
+            self.id,
+            self.dm,
+            self.bc,
+            self.of,
+            self.nf
+        )
     }
 }
 
@@ -65,7 +80,6 @@ fn main() {
     // enough arguments
     let bin = fs::read(env::args().next_back().unwrap()).unwrap();
     let cpu = CPU::new();
-
 
     println!("{}", cpu);
 }
