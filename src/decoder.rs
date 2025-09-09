@@ -143,6 +143,36 @@ enum SysFunc {
     RTI
 }
 
-fn decode() {
+/// Enum to contain all of our categories of instructions.
+enum Instruction {
+    SysFunc(SysFunc),
+    StatusFlagChg(StatusFlagChg),
+    Branch(Branch),
+    JmpCall(JmpCall),
+    Shifts(Shifts),
+    IncDec(IncDec),
+    Arith(Arith),
+    Logical(Logical),
+    StackOps(StackOps),
+    RegTran(RegTran),
+    LoadStore(LoadStore),
+}
 
+
+// Each of these will need to be expcanded (probably to a 2d array?) to account for all the
+// variants of each instruction (i.e. immediate, zero page, etc)
+static SYS_FUNC: [u8; 3] = [0,0,0];
+static STATUS_FLAG: [u8; 7] = [0,0,0,0,0,0,0];
+static BRANCH: [u8; 8] = [0,0,0,0,0,0,0,0];
+static JMP_CALL: [u8; 3] = [0,0,0];
+static SHIFTS: [u8; 4] = [0,0,0,0];
+static INC_DEC: [u8; 6] = [0,0,0,0,0,0];
+static ARITH: [u8; 5] = [0,0,0,0,0];
+static LOGICAL: [u8; 4] = [0,0,0,0];
+static STACK_OPS: [u8; 6] = [0,0,0,0,0,0];
+static REG_TRAN: [u8; 4] = [0,0,0,0];
+static LOAD_STORE: [u8; 6] = [0,0,0,0,0,0];
+
+fn decode() -> Vec<Instruction> {
+    return Vec::new();
 }
