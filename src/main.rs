@@ -17,4 +17,5 @@ fn main() {
     let cpu = cpu::CPU::new();
 
     println!("{}", cpu);
+    decoder::decode(&bin);
 }
