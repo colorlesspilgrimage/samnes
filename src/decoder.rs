@@ -174,7 +174,7 @@ enum Instruction {
     LoadStore(LoadStore, AddressMode),
 }
 
-static INSTRUCTION_TABLE: [(Instruction, u8); 34] = [
+static INSTRUCTION_TABLE: [(Instruction, u8); 42] = [
     (Instruction::SysFunc(SysFunc::BRK, AddressMode::Implied), 0x00),
     (Instruction::SysFunc(SysFunc::NOP, AddressMode::Implied), 0xEA),
     (Instruction::SysFunc(SysFunc::RTI, AddressMode::Implied), 0x40),
@@ -209,10 +209,16 @@ static INSTRUCTION_TABLE: [(Instruction, u8); 34] = [
     (Instruction::Shifts(Shifts::LSR, AddressMode::ZeroPageX), 0x56),
     (Instruction::Shifts(Shifts::ROL, AddressMode::ZeroPageX), 0x36),
     (Instruction::Shifts(Shifts::ROR, AddressMode::ZeroPageX), 0x76),
+    (Instruction::Shifts(Shifts::ASL, AddressMode::Absolute), 0x0E),
+    (Instruction::Shifts(Shifts::LSR, AddressMode::Absolute), 0x4E),
+    (Instruction::Shifts(Shifts::ROL, AddressMode::Absolute), 0x2E),
+    (Instruction::Shifts(Shifts::ROR, AddressMode::Absolute), 0x6E),
+    (Instruction::Shifts(Shifts::ASL, AddressMode::AbsoluteX), 0x1E),
+    (Instruction::Shifts(Shifts::LSR, AddressMode::AbsoluteX), 0x5E),
+    (Instruction::Shifts(Shifts::ROL, AddressMode::AbsoluteX), 0x3E),
+    (Instruction::Shifts(Shifts::ROR, AddressMode::AbsoluteX), 0x7E),
 ];
 
-static SHIFTS_ABS: [u8; 4] = [0x0E, 0x4E, 0x2E, 0x6E];
-static SHIFTS_ABS_X: [u8; 4] = [0x1E, 0x5E, 0x3E, 0x7E];
 static INC_DEC_IMPLIED: [u8; 4] = [0xCA, 0x88, 0xE8, 0xC8];
 static INC_DEC_ZERO_PAGE: [u8; 3] = [0xC6, 0x88, 0xE6];
 static INC_DEC_ZERO_PAGE_X: [u8; 2] = [0xD6, 0xF6];
