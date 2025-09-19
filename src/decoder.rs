@@ -174,7 +174,7 @@ enum Instruction {
     LoadStore(LoadStore, AddressMode),
 }
 
-static INSTRUCTION_TABLE: [(Instruction, u8); 42] = [
+static INSTRUCTION_TABLE: [(Instruction, u8); 54] = [
     (Instruction::SysFunc(SysFunc::BRK, AddressMode::Implied), 0x00),
     (Instruction::SysFunc(SysFunc::NOP, AddressMode::Implied), 0xEA),
     (Instruction::SysFunc(SysFunc::RTI, AddressMode::Implied), 0x40),
@@ -217,13 +217,20 @@ static INSTRUCTION_TABLE: [(Instruction, u8); 42] = [
     (Instruction::Shifts(Shifts::LSR, AddressMode::AbsoluteX), 0x5E),
     (Instruction::Shifts(Shifts::ROL, AddressMode::AbsoluteX), 0x3E),
     (Instruction::Shifts(Shifts::ROR, AddressMode::AbsoluteX), 0x7E),
+    (Instruction::IncDec(IncDec::DEX, AddressMode::Implied), 0xCA),
+    (Instruction::IncDec(IncDec::DEY, AddressMode::Implied), 0x88),
+    (Instruction::IncDec(IncDec::INX, AddressMode::Implied), 0xE8),
+    (Instruction::IncDec(IncDec::INY, AddressMode::Implied), 0xC8),
+    (Instruction::IncDec(IncDec::DEC, AddressMode::ZeroPage), 0xC6),
+    (Instruction::IncDec(IncDec::INC, AddressMode::ZeroPage), 0xE6),
+    (Instruction::IncDec(IncDec::DEC, AddressMode::ZeroPageX), 0xD6),
+    (Instruction::IncDec(IncDec::INC, AddressMode::ZeroPageX), 0xF6),
+    (Instruction::IncDec(IncDec::DEC, AddressMode::Absolute), 0xCE),
+    (Instruction::IncDec(IncDec::INC, AddressMode::Absolute), 0xEE),
+    (Instruction::IncDec(IncDec::DEC, AddressMode::AbsoluteX), 0xDE),
+    (Instruction::IncDec(IncDec::INC, AddressMode::AbsoluteX), 0xFE),
 ];
 
-static INC_DEC_IMPLIED: [u8; 4] = [0xCA, 0x88, 0xE8, 0xC8];
-static INC_DEC_ZERO_PAGE: [u8; 3] = [0xC6, 0x88, 0xE6];
-static INC_DEC_ZERO_PAGE_X: [u8; 2] = [0xD6, 0xF6];
-static INC_DEC_ABS: [u8; 2] = [0xCE, 0xEE];
-static INC_DEC_ABS_X: [u8; 2] = [0xDE, 0xFE];
 static ARITH_IMMEDIATE: [u8; 5] = [0x69,0xC9,0xE0,0xC0,0xE9];
 static ARITH_ZERO_PAGE: [u8; 5] = [0x65, 0xC5, 0xE4, 0xC4, 0xE5];
 static ARTIH_ZERO_PAGE_X: [u8; 3] = [0x75, 0xD5, 0xF5];
