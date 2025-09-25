@@ -174,7 +174,7 @@ enum Instruction {
     LoadStore(LoadStore, AddressMode),
 }
 
-static INSTRUCTION_TABLE: [(Instruction, u8); 54] = [
+static INSTRUCTION_TABLE: [(Instruction, u8); 67] = [
     (Instruction::SysFunc(SysFunc::BRK, AddressMode::Implied), 0x00),
     (Instruction::SysFunc(SysFunc::NOP, AddressMode::Implied), 0xEA),
     (Instruction::SysFunc(SysFunc::RTI, AddressMode::Implied), 0x40),
@@ -229,11 +229,21 @@ static INSTRUCTION_TABLE: [(Instruction, u8); 54] = [
     (Instruction::IncDec(IncDec::INC, AddressMode::Absolute), 0xEE),
     (Instruction::IncDec(IncDec::DEC, AddressMode::AbsoluteX), 0xDE),
     (Instruction::IncDec(IncDec::INC, AddressMode::AbsoluteX), 0xFE),
+    (Instruction::Arith(Arith::ADC, AddressMode::Immediate), 0x69),
+    (Instruction::Arith(Arith::CMP, AddressMode::Immediate), 0xC9),
+    (Instruction::Arith(Arith::CPX, AddressMode::Immediate), 0xE0),
+    (Instruction::Arith(Arith::CPY, AddressMode::Immediate), 0xC0),
+    (Instruction::Arith(Arith::SBC, AddressMode::Immediate), 0xE9),
+    (Instruction::Arith(Arith::ADC, AddressMode::ZeroPage), 0x65),
+    (Instruction::Arith(Arith::CMP, AddressMode::ZeroPage), 0xC5),
+    (Instruction::Arith(Arith::CPX, AddressMode::ZeroPage), 0xE4),
+    (Instruction::Arith(Arith::CPY, AddressMode::ZeroPage), 0xC4),
+    (Instruction::Arith(Arith::SBC, AddressMode::ZeroPage), 0xE9),
+    (Instruction::Arith(Arith::ADC, AddressMode::ZeroPageX), 0x75),
+    (Instruction::Arith(Arith::CMP, AddressMode::ZeroPageX), 0xD5),
+    (Instruction::Arith(Arith::SBC, AddressMode::ZeroPageX), 0xF5),
 ];
 
-static ARITH_IMMEDIATE: [u8; 5] = [0x69,0xC9,0xE0,0xC0,0xE9];
-static ARITH_ZERO_PAGE: [u8; 5] = [0x65, 0xC5, 0xE4, 0xC4, 0xE5];
-static ARTIH_ZERO_PAGE_X: [u8; 3] = [0x75, 0xD5, 0xF5];
 static ARTIH_ABS: [u8; 5] = [0x6D, 0xCD, 0xEC, 0xCC, 0xED];
 static ARITH_ABS_X: [u8; 3] = [0x7D, 0xDD, 0xFD];
 static ARITH_ABS_Y: [u8; 3] = [0x79, 0xD9, 0xF9];
