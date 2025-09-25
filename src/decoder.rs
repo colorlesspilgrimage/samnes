@@ -174,7 +174,7 @@ enum Instruction {
     LoadStore(LoadStore, AddressMode),
 }
 
-static INSTRUCTION_TABLE: [(Instruction, u8); 67] = [
+static INSTRUCTION_TABLE: [(Instruction, u8); 72] = [
     (Instruction::SysFunc(SysFunc::BRK, AddressMode::Implied), 0x00),
     (Instruction::SysFunc(SysFunc::NOP, AddressMode::Implied), 0xEA),
     (Instruction::SysFunc(SysFunc::RTI, AddressMode::Implied), 0x40),
@@ -242,9 +242,13 @@ static INSTRUCTION_TABLE: [(Instruction, u8); 67] = [
     (Instruction::Arith(Arith::ADC, AddressMode::ZeroPageX), 0x75),
     (Instruction::Arith(Arith::CMP, AddressMode::ZeroPageX), 0xD5),
     (Instruction::Arith(Arith::SBC, AddressMode::ZeroPageX), 0xF5),
+    (Instruction::Arith(Arith::ADC, AddressMode::Absolute), 0x6D),
+    (Instruction::Arith(Arith::CMP, AddressMode::Absolute), 0xCD),
+    (Instruction::Arith(Arith::CPX, AddressMode::Absolute), 0xEC),
+    (Instruction::Arith(Arith::CPY, AddressMode::Absolute), 0xCC),
+    (Instruction::Arith(Arith::SBC, AddressMode::Absolute), 0xED),
 ];
 
-static ARTIH_ABS: [u8; 5] = [0x6D, 0xCD, 0xEC, 0xCC, 0xED];
 static ARITH_ABS_X: [u8; 3] = [0x7D, 0xDD, 0xFD];
 static ARITH_ABS_Y: [u8; 3] = [0x79, 0xD9, 0xF9];
 static ARITH_INDIRECT_X: [u8; 3] = [0x61, 0xC1, 0xE1];
