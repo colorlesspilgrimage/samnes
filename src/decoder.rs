@@ -327,14 +327,7 @@ static INSTRUCTION_TABLE: [(Instruction, u8); 150] = [
     (Instruction::LoadStore(LoadStore::STA, AddressMode::IndirectY), 0x91),
 ];
 
-// this function won't always be public...
-/*
-pub fn decode(d: &Vec<u8>) /*-> Vec<Instruction>*/ {
 
-    for b in d {
-        if REG_TRAN.contains(b) {
-            println!("GOT EM - REG_TRAN SPOTTED!!");
-        }
-    }
-    //return Vec::new();
-}*/
+fn decode() {
+    return
+}
