@@ -174,7 +174,7 @@ enum Instruction {
     LoadStore(LoadStore, AddressMode),
 }
 
-static INSTRUCTION_TABLE: [(Instruction, u8); 84] = [
+static INSTRUCTION_TABLE: [(Instruction, u8); 151] = [
     (Instruction::SysFunc(SysFunc::BRK, AddressMode::Implied), 0x00),
     (Instruction::SysFunc(SysFunc::NOP, AddressMode::Implied), 0xEA),
     (Instruction::SysFunc(SysFunc::RTI, AddressMode::Implied), 0x40),
@@ -259,30 +259,79 @@ static INSTRUCTION_TABLE: [(Instruction, u8); 84] = [
     (Instruction::Arith(Arith::ADC, AddressMode::IndirectY), 0x71),
     (Instruction::Arith(Arith::ADC, AddressMode::IndirectY), 0xD1),
     (Instruction::Arith(Arith::ADC, AddressMode::IndirectY), 0xF1),
+    // None of these instructions match the opcodes. The address modes are correct but the 
+    // instructions themselves will need to be changed.
+    (Instruction::Logical(Logical::AND, AddressMode::Immediate), 0x29),
+    (Instruction::Logical(Logical::AND, AddressMode::Immediate), 0x24),
+    (Instruction::Logical(Logical::AND, AddressMode::Immediate), 0x49),
+    (Instruction::Logical(Logical::AND, AddressMode::Immediate), 0x09),
+    (Instruction::Logical(Logical::AND, AddressMode::ZeroPage), 0x25),
+    (Instruction::Logical(Logical::AND, AddressMode::ZeroPage), 0x45),
+    (Instruction::Logical(Logical::AND, AddressMode::ZeroPage), 0x05),
+    (Instruction::Logical(Logical::AND, AddressMode::ZeroPageX), 0x35),
+    (Instruction::Logical(Logical::AND, AddressMode::ZeroPageX), 0x55),
+    (Instruction::Logical(Logical::AND, AddressMode::ZeroPageX), 0x15),
+    (Instruction::Logical(Logical::AND, AddressMode::Absolute), 0x2D),
+    (Instruction::Logical(Logical::AND, AddressMode::Absolute), 0x2C),
+    (Instruction::Logical(Logical::AND, AddressMode::Absolute), 0x4D),
+    (Instruction::Logical(Logical::AND, AddressMode::Absolute), 0x0D),
+    (Instruction::Logical(Logical::AND, AddressMode::AbsoluteX), 0x3D),
+    (Instruction::Logical(Logical::AND, AddressMode::AbsoluteX), 0x5D),
+    (Instruction::Logical(Logical::AND, AddressMode::AbsoluteX), 0x1D),
+    (Instruction::Logical(Logical::AND, AddressMode::AbsoluteY), 0x39),
+    (Instruction::Logical(Logical::AND, AddressMode::AbsoluteY), 0x59),
+    (Instruction::Logical(Logical::AND, AddressMode::AbsoluteY), 0x19),
+    (Instruction::Logical(Logical::AND, AddressMode::IndirectX), 0x21),
+    (Instruction::Logical(Logical::AND, AddressMode::IndirectX), 0x41),
+    (Instruction::Logical(Logical::AND, AddressMode::IndirectX), 0x01),
+    (Instruction::Logical(Logical::AND, AddressMode::IndirectY), 0x31),
+    (Instruction::Logical(Logical::AND, AddressMode::IndirectY), 0x51),
+    (Instruction::Logical(Logical::AND, AddressMode::IndirectY), 0x11),
+    (Instruction::StackOps(StackOps::PHA, AddressMode::Implied), 0x48),
+    (Instruction::StackOps(StackOps::PHA, AddressMode::Implied), 0x08),
+    (Instruction::StackOps(StackOps::PHA, AddressMode::Implied), 0x68),
+    (Instruction::StackOps(StackOps::PHA, AddressMode::Implied), 0x28),
+    (Instruction::StackOps(StackOps::PHA, AddressMode::Implied), 0xBA),
+    (Instruction::StackOps(StackOps::PHA, AddressMode::Implied), 0x9A),
+    (Instruction::RegTran(RegTran::TAX, AddressMode::Implied), 0xAA),
+    (Instruction::RegTran(RegTran::TAX, AddressMode::Implied), 0xA8),
+    (Instruction::RegTran(RegTran::TAX, AddressMode::Implied), 0x98),
+    (Instruction::RegTran(RegTran::TAX, AddressMode::Implied), 0x8A),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Immediate), 0xA9),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Immediate), 0xA2),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Immediate), 0xA0),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPage), 0xA5),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPage), 0xA6),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPage), 0xA4),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPage), 0x85),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPage), 0x86),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPage), 0x84),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPageX), 0xB5),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPageX), 0xB4),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPageX), 0x95),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPageX), 0x94),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPageY), 0xB6),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::ZeroPageY), 0x96),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Absolute), 0xAD),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Absolute), 0xAE),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Absolute), 0xAC),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Absolute), 0x8D),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Absolute), 0x8E),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::Absolute), 0x8C),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::AbsoluteX), 0xBD),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::AbsoluteX), 0xBC),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::AbsoluteX), 0x9D),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::AbsoluteY), 0xB9),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::AbsoluteY), 0xBE),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::AbsoluteY), 0x99),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::IndirectX), 0xA1),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::IndirectX), 0x81),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::IndirectY), 0xB1),
+    (Instruction::LoadStore(LoadStore::LDA, AddressMode::IndirectY), 0x91),
 ];
 
-static LOGICAL_IMMEDIATE: [u8; 4] = [0x29, 0x24, 0x49, 0x09];
-static LOGICAL_ZERO_PAGE: [u8; 3] = [0x25,0x45, 0x05];
-static LOGICAL_ZERO_PAGE_X: [u8; 3] = [0x35, 0x55, 0x15];
-static LOGICAL_ABS: [u8; 4] = [0x2D, 0x2C, 0x4D, 0x0D];
-static LOGICAL_ABS_X: [u8; 3] = [0x3D, 0x5D, 0x1D];
-static LOGICAL_ABS_Y: [u8; 3] = [0x39, 0x59, 0x19];
-static LOGICAL_INDIRECT_X: [u8; 3] = [0x21, 0x41, 0x01];
-static LOGICAL_INDIRECT_Y: [u8; 3] = [0x31, 0x51,0x11];
-static STACK_OPS: [u8; 6] = [0x48,0x08,0x68,0x28,0xBA,0x9A];
-static REG_TRAN: [u8; 4] = [0xAA,0xA8,0x98,0x8A];
-static LOAD_STORE_IMMEDIATE: [u8; 3] = [0xA9, 0xA2, 0xA0];
-static LOAD_STORE_ZERO_PAGE: [u8; 6] = [0xA5, 0xA6, 0xA4, 0x85, 0x86, 0x84];
-static LOAD_STORE_ZERO_PAGE_X: [u8; 4] = [0xB5, 0xB4, 0x95, 0x94];
-static LOAD_STORE_ZERO_PAGE_Y: [u8; 2] = [0xB6, 0x96];
-static LOAD_STORE_ABSOLUTE: [u8; 6] = [0xAD, 0xAE, 0xAC, 0x8D, 0x8E, 0x8C];
-static LOAD_STORE_ABSOLUTE_X: [u8; 3] = [0xBD, 0xBC, 0x9D];
-static LOAD_STORE_ABSOLUTE_Y: [u8; 3] = [0xB9, 0xBE, 0x99];
-static LOAD_STORE_INDIRECT_X: [u8; 2] = [0xA1, 0x81];
-static LOAD_STORE_INDIRECT_Y: [u8; 2] = [0xB1, 0x91];
-
-
 // this function won't always be public...
+/*
 pub fn decode(d: &Vec<u8>) /*-> Vec<Instruction>*/ {
 
     for b in d {
@@ -291,4 +340,4 @@ pub fn decode(d: &Vec<u8>) /*-> Vec<Instruction>*/ {
         }
     }
     //return Vec::new();
-}
+}*/
