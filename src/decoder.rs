@@ -155,8 +155,8 @@ enum AddressMode {
     AbsoluteX,
     AbsoluteY,
     Indirect,
-    IdxIndirect,
-    IndirectIdx
+    IndirectX,
+    IndirectY
 }
 
 /// Enum to contain all of our categories of instructions.
@@ -174,7 +174,7 @@ enum Instruction {
     LoadStore(LoadStore, AddressMode),
 }
 
-static INSTRUCTION_TABLE: [(Instruction, u8); 72] = [
+static INSTRUCTION_TABLE: [(Instruction, u8); 84] = [
     (Instruction::SysFunc(SysFunc::BRK, AddressMode::Implied), 0x00),
     (Instruction::SysFunc(SysFunc::NOP, AddressMode::Implied), 0xEA),
     (Instruction::SysFunc(SysFunc::RTI, AddressMode::Implied), 0x40),
@@ -247,12 +247,20 @@ static INSTRUCTION_TABLE: [(Instruction, u8); 72] = [
     (Instruction::Arith(Arith::CPX, AddressMode::Absolute), 0xEC),
     (Instruction::Arith(Arith::CPY, AddressMode::Absolute), 0xCC),
     (Instruction::Arith(Arith::SBC, AddressMode::Absolute), 0xED),
+    (Instruction::Arith(Arith::ADC, AddressMode::AbsoluteX), 0x7D),
+    (Instruction::Arith(Arith::ADC, AddressMode::AbsoluteX), 0xDD),
+    (Instruction::Arith(Arith::ADC, AddressMode::AbsoluteX), 0xFD),
+    (Instruction::Arith(Arith::ADC, AddressMode::AbsoluteY), 0x79),
+    (Instruction::Arith(Arith::ADC, AddressMode::AbsoluteY), 0xD9),
+    (Instruction::Arith(Arith::ADC, AddressMode::AbsoluteY), 0xF9),
+    (Instruction::Arith(Arith::ADC, AddressMode::IndirectX), 0x61),
+    (Instruction::Arith(Arith::ADC, AddressMode::IndirectX), 0xC1),
+    (Instruction::Arith(Arith::ADC, AddressMode::IndirectX), 0xE1),
+    (Instruction::Arith(Arith::ADC, AddressMode::IndirectY), 0x71),
+    (Instruction::Arith(Arith::ADC, AddressMode::IndirectY), 0xD1),
+    (Instruction::Arith(Arith::ADC, AddressMode::IndirectY), 0xF1),
 ];
 
-static ARITH_ABS_X: [u8; 3] = [0x7D, 0xDD, 0xFD];
-static ARITH_ABS_Y: [u8; 3] = [0x79, 0xD9, 0xF9];
-static ARITH_INDIRECT_X: [u8; 3] = [0x61, 0xC1, 0xE1];
-static ARITH_INDIRECT_Y: [u8; 3] = [0x71, 0xD1, 0xF1];
 static LOGICAL_IMMEDIATE: [u8; 4] = [0x29, 0x24, 0x49, 0x09];
 static LOGICAL_ZERO_PAGE: [u8; 3] = [0x25,0x45, 0x05];
 static LOGICAL_ZERO_PAGE_X: [u8; 3] = [0x35, 0x55, 0x15];
