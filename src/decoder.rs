@@ -1,3 +1,4 @@
+#[derive(Copy, Clone, Debug)]
 enum LoadStore {
     /// Load Accumulator (N,Z)
     LDA,
@@ -13,6 +14,7 @@ enum LoadStore {
     STY
 }
 
+#[derive(Copy, Clone, Debug)]
 enum RegTran {
     /// Transfer accumulator to X register (N,Z)
     TAX,
@@ -24,6 +26,7 @@ enum RegTran {
     TYA
 }
 
+#[derive(Copy, Clone, Debug)]
 enum StackOps {
     /// Transfer stack pointer to X register (N,Z) 
     TSX,
@@ -39,6 +42,7 @@ enum StackOps {
     PLP
 }
 
+#[derive(Copy, Clone, Debug)]
 enum Logical {
     /// Logical AND (N,Z)
     AND,
@@ -50,6 +54,7 @@ enum Logical {
     BIT
 }
 
+#[derive(Copy, Clone, Debug)]
 enum Arith {
     /// Add with carry (N,V,Z,C) 
     ADC,
@@ -63,6 +68,7 @@ enum Arith {
     CPY
 }
 
+#[derive(Copy, Clone, Debug)]
 enum IncDec {
     /// Increment a memory location (N,Z)
     INC,
@@ -78,6 +84,7 @@ enum IncDec {
     DEY
 }
 
+#[derive(Copy, Clone, Debug)]
 enum Shifts {
     /// Arithmetic shift left (N,Z,C) 
     ASL,
@@ -89,6 +96,7 @@ enum Shifts {
     ROR
 }
 
+#[derive(Copy, Clone, Debug)]
 enum JmpCall {
     /// Jump to another location 
     JMP,
@@ -98,6 +106,7 @@ enum JmpCall {
     RTS
 }
 
+#[derive(Copy, Clone, Debug)]
 enum Branch {
     /// Branch if carry flag clear
     BCC,
@@ -117,6 +126,7 @@ enum Branch {
     BVS
 }
 
+#[derive(Copy, Clone, Debug)]
 enum StatusFlagChg {
     /// Clear carry flag (C) 
     CLC,
@@ -134,6 +144,7 @@ enum StatusFlagChg {
     SEI
 }
 
+#[derive(Copy, Clone, Debug)]
 enum SysFunc {
     /// Force an interrupt (B) 
     BRK,
@@ -143,6 +154,7 @@ enum SysFunc {
     RTI
 }
 
+#[derive(Copy, Clone, Debug)]
 enum AddressMode {
     Implied,
     Accumulator,
@@ -160,7 +172,8 @@ enum AddressMode {
 }
 
 /// Enum to contain all of our categories of instructions.
-enum Instruction {
+#[derive(Copy, Clone, Debug)]
+pub enum Instruction {
     SysFunc(SysFunc, AddressMode),
     StatusFlagChg(StatusFlagChg, AddressMode),
     Branch(Branch, AddressMode),
@@ -327,7 +340,16 @@ static INSTRUCTION_TABLE: [(Instruction, u8); 150] = [
     (Instruction::LoadStore(LoadStore::STA, AddressMode::IndirectY), 0x91),
 ];
 
-
-fn decode() {
-    return
+// right now, this is pre-decompiling. for better performance in the future we might want to call
+// this in real time to JIT decompile instead of putting the loading burden on the start.
+pub fn decode(bytecode: &Vec<u8>) -> Vec<Instruction> {
+    let mut v = Vec::new();
+    for b in bytecode {
+        for (ins, op) in INSTRUCTION_TABLE {
+            if *b == op {
+                v.push(ins);
+            }
+        }
+    }
+    return v;
 }
